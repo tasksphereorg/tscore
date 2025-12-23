@@ -21,7 +21,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.APP_DIR }}
+            git reset --hard
             git pull origin main
-            npm install --production
-            passenger-config restart-app /home/tasksphere/public_html/tscore
+            npm install --omit=dev
+            passenger-config restart-app --all
 
