@@ -21,12 +21,16 @@ import { errorHandler } from "./middlewares/error.middlewares.js"
 import userRouter from "./routes/user.routes.js"
 import yearRouter from "./routes/year.routes.js"
 import divisionRouter from "./routes/division.routes.js"
+import subjectRouter from "./routes/subjects.routes.js"
 
 
 app.use("/api/v1/healthcheck" , healthcheckRouter)
 app.use("/api/v1/user" , userRouter)
 app.use("/api/v1/year" , yearRouter)
 app.use("/api/v1/division",divisionRouter)
+app.use("/api/v1/subject",subjectRouter)
+
+
 app.use(errorHandler) 
 
 

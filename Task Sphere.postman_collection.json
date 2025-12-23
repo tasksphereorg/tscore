@@ -1,0 +1,743 @@
+{
+	"info": {
+		"_postman_id": "c0bca403-0362-4a91-b94c-ce9f3a7fde45",
+		"name": "Task Sphere",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28077480",
+		"_collection_link": "https://galactic-shuttle-585825.postman.co/workspace/Task-Sphere~590126db-f3c4-4d5e-9d70-c2d9c108335c/collection/28077480-c0bca403-0362-4a91-b94c-ce9f3a7fde45?action=share&source=collection_link&creator=28077480"
+	},
+	"item": [
+		{
+			"name": "User APIs",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"vijay@gmail.com\",\n    \"password\" : \"vijay\",\n    \"name\" : \"Vijay Rindhe\",\n    \"mobno\" : 1234567890\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/user/register",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"admin@gmail.com\",\n    \"password\" : \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/user/login",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshAccessToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/user/refresh-token",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/user/profile",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3NjY0OTUzOTQsImV4cCI6MTc2NjQ5NzE5NH0.-sIedqyPEkhatPQLhpxCR38T2-nQkKLoQL-RD4_6c30",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/user/logout",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3NjY0OTUzOTQsImV4cCI6MTc2NjQ5NzE5NH0.-sIedqyPEkhatPQLhpxCR38T2-nQkKLoQL-RD4_6c30",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Year APIs",
+			"item": [
+				{
+					"name": "Create Year",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"4th Year\",\n    \"description\": \"This is the 4th Year\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/year/create",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"year",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all the years",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"3rd Year\",\n    \"description\": \"This is the 3rd Year\"\n}"
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/year/get-years",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"year",
+								"get-years"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getYearById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/year/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"year",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Year",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"1st Year\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/year/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"year",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Year",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"1st Year\"\n}"
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/year/4",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"year",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzY2NTE3MzE4LCJleHAiOjE3NjY1MTkxMTh9.lRV8_r9E_z2VdL6_cuE0c_XAb1kAyPg8S1ulUzZ5Q4Y",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Division APIs",
+			"item": [
+				{
+					"name": "Create Divisions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Div B\",\n    \"yearId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/division/",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"division",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Divisions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/division/get-divisions",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"division",
+								"get-divisions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get DIvision By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/division/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"division",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Division",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Div A\",\n    \"yearId\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/division/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"division",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Division",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/division/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"division",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzY2NTIxNTYwLCJleHAiOjE3NjY1MjMzNjB9.wJW06dOCfb9SaKieFJ5bGZra4kmU6c3AvRVNXiRYjDA",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Subject APIs",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"DBMS\",\n    \"description\": \"This subjects include the database management systems\",\n    \"yearId\" : 3    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/get-subjects",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"get-subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Subject By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Suject",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"DAA 1\",\n    \"description\": \"This subjects include the algorithm analysis\",\n    \"yearId\" : 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/1",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"DAA 1\",\n    \"description\": \"This subjects include the algorithm analysis\",\n    \"yearId\" : 3\n}"
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/5",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzY2NTIzNDQ4LCJleHAiOjE3NjY1MjUyNDh9.Tdo78Gklql1jGdmjCUVCwNvPcMmi-ivEbTVJUQS3XfQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
