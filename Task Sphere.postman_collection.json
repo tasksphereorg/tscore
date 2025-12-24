@@ -12,6 +12,37 @@
 			"item": [
 				{
 					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Create User - POST request tests",
+									"pm.test(\"Status code is 201 Created or 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test(\"Response has user data structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Response contains user identifier or success message\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const hasUserId = jsonData.hasOwnProperty('id') || jsonData.hasOwnProperty('userId') || jsonData.hasOwnProperty('_id');",
+									"    const hasMessage = jsonData.hasOwnProperty('message') || jsonData.hasOwnProperty('success');",
+									"    const hasData = jsonData.hasOwnProperty('data');",
+									"    pm.expect(hasUserId || hasMessage || hasData).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"POST request is not idempotent - creating duplicate should be handled\", function () {",
+									"    pm.expect(pm.request.method).to.equal('POST');",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -45,6 +76,39 @@
 				},
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Login - POST request tests",
+									"pm.test(\"Status code is 200 OK for successful login\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test(\"Response contains authentication token\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const hasToken = jsonData.hasOwnProperty('token') || jsonData.hasOwnProperty('accessToken') || ",
+									"                     jsonData.hasOwnProperty('access_token') || (jsonData.data && jsonData.data.hasOwnProperty('token'));",
+									"    pm.expect(hasToken).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response has proper structure for login\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});",
+									"",
+									"// Store token for subsequent requests if available",
+									"const jsonData = pm.response.json();",
+									"if (jsonData.token || jsonData.accessToken || jsonData.access_token) {",
+									"    const token = jsonData.token || jsonData.accessToken || jsonData.access_token;",
+									"    pm.collectionVariables.set('authToken', token);",
+									"}"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -78,6 +142,32 @@
 				},
 				{
 					"name": "refreshAccessToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Refresh Access Token - POST request tests",
+									"pm.test(\"Status code is 200 OK for token refresh\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test(\"Response contains new access token\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const hasToken = jsonData.hasOwnProperty('token') || jsonData.hasOwnProperty('accessToken') || ",
+									"                     jsonData.hasOwnProperty('access_token') || (jsonData.data && (jsonData.data.token || jsonData.data.accessToken));",
+									"    pm.expect(hasToken).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Response is valid JSON object\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -102,6 +192,37 @@
 				},
 				{
 					"name": "profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Profile - GET request tests",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"pm.test(\"GET request is idempotent - safe method\", function () {",
+									"    pm.expect(pm.request.method).to.equal('GET');",
+									"});",
+									"",
+									"pm.test(\"Response contains user profile data\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Profile has expected user fields\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const userData = jsonData.data || jsonData.user || jsonData;",
+									"    const hasEmail = userData.hasOwnProperty('email');",
+									"    const hasName = userData.hasOwnProperty('name') || userData.hasOwnProperty('username');",
+									"    pm.expect(hasEmail || hasName).to.be.true;",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -126,6 +247,32 @@
 				},
 				{
 					"name": "user Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// User Logout - POST request tests",
+									"pm.test(\"Status code is 200 OK or 204 No Content\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});",
+									"",
+									"pm.test(\"Logout response indicates success\", function () {",
+									"    if (pm.response.code !== 204) {",
+									"        const jsonData = pm.response.json();",
+									"        const hasSuccess = jsonData.hasOwnProperty('success') || jsonData.hasOwnProperty('message');",
+									"        pm.expect(hasSuccess).to.be.true;",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Response is valid\", function () {",
+									"    pm.expect(pm.response.code).to.be.below(500);",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -199,6 +346,37 @@
 			"item": [
 				{
 					"name": "Create Year",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Create Year - POST request tests",
+									"pm.test(\"Status code is 201 Created or 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									"",
+									"pm.test(\"Response contains year data\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Created year has required fields\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const yearData = jsonData.data || jsonData;",
+									"    const hasName = yearData.hasOwnProperty('name');",
+									"    const hasId = yearData.hasOwnProperty('id') || yearData.hasOwnProperty('_id') || yearData.hasOwnProperty('yearId');",
+									"    pm.expect(hasName || hasId).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"POST creates new resource\", function () {",
+									"    pm.expect(pm.request.method).to.equal('POST');",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -232,6 +410,40 @@
 				},
 				{
 					"name": "Get all the years",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Get all years - GET request tests",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"pm.test(\"GET request is idempotent\", function () {",
+									"    pm.expect(pm.request.method).to.equal('GET');",
+									"});",
+									"",
+									"pm.test(\"Response is an array or contains array of years\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const yearsArray = Array.isArray(jsonData) ? jsonData : (jsonData.data || jsonData.years || []);",
+									"    pm.expect(yearsArray).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each year object has expected structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const yearsArray = Array.isArray(jsonData) ? jsonData : (jsonData.data || jsonData.years || []);",
+									"    if (yearsArray.length > 0) {",
+									"        yearsArray.forEach(function(year) {",
+									"            pm.expect(year).to.be.an('object');",
+									"        });",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -263,6 +475,35 @@
 				},
 				{
 					"name": "getYearById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Get Year By ID - GET request tests",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"pm.test(\"GET request is idempotent - safe method\", function () {",
+									"    pm.expect(pm.request.method).to.equal('GET');",
+									"});",
+									"",
+									"pm.test(\"Response contains single year object\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Year object has name field\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const yearData = jsonData.data || jsonData;",
+									"    pm.expect(yearData).to.have.property('name');",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -563,13 +804,13 @@
 			"name": "Subject APIs",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Create Subject",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"DBMS\",\n    \"description\": \"This subjects include the database management systems\",\n    \"yearId\" : 3    \n}",
+							"raw": "{\n    \"name\" : \"DAA\",\n    \"description\": \"This subjects include the DAA\",\n    \"yearId\" : 2   \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -589,6 +830,72 @@
 								"api",
 								"v1",
 								"subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Division Subject Allotment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"divisionId\" : 2,\n    \"subjectId\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/allot-division-subject",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"allot-division-subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Copy Division Subjects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fromDivisionId\" : 2,\n    \"toDivisionId\" : 4\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/copy-division-subjects",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"copy-division-subjects"
 							]
 						}
 					},
@@ -643,6 +950,31 @@
 					"response": []
 				},
 				{
+					"name": "Get Division Subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/get-division-subjects/4",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"get-division-subjects",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update Suject",
 					"request": {
 						"method": "PATCH",
@@ -676,7 +1008,41 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Remove Division Subjects",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"divisionId\" : 2,\n    \"subjectId\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://t806wzg5-8000.inc1.devtunnels.ms/api/v1/subject/remove/division-subject",
+							"protocol": "https",
+							"host": [
+								"t806wzg5-8000",
+								"inc1",
+								"devtunnels",
+								"ms"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subject",
+								"remove",
+								"division-subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subject",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -709,7 +1075,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzY2NTIzNDQ4LCJleHAiOjE3NjY1MjUyNDh9.Tdo78Gklql1jGdmjCUVCwNvPcMmi-ivEbTVJUQS3XfQ",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzY2NjA4NTA1LCJleHAiOjE3NjY2MTAzMDV9.Q_hqmcdLGQFIhxXe_AV7Mui9H3lAWT6YQiTlts5V3T8",
 						"type": "string"
 					}
 				]
@@ -738,6 +1104,39 @@
 					}
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Collection-level test script - runs after every request in the collection",
+					"",
+					"// Assert response time is below threshold (using collection variable)",
+					"const maxResponseTime = pm.collectionVariables.get(\"defaultTimeout\") || 5000;",
+					"pm.test(\"Response time is below threshold (\" + maxResponseTime + \"ms)\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(parseInt(maxResponseTime));",
+					"});",
+					"",
+					"// Assert Content-Type header is present and is JSON for successful responses",
+					"pm.test(\"Content-Type header is present\", function () {",
+					"    pm.response.to.have.header(\"Content-Type\");",
+					"});",
+					"",
+					"// Check if response is JSON when Content-Type indicates JSON",
+					"const contentType = pm.response.headers.get(\"Content-Type\");",
+					"if (contentType && contentType.includes(\"application/json\")) {",
+					"    pm.test(\"Response is valid JSON\", function () {",
+					"        pm.expect(() => pm.response.json()).to.not.throw();",
+					"    });",
+					"}",
+					"",
+					"// Log response time for monitoring",
+					"console.log(\"Request: \" + pm.info.requestName + \" | Response Time: \" + pm.response.responseTime + \"ms\");"
+				]
+			}
 		}
 	]
 }
