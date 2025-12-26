@@ -38,9 +38,9 @@ const createSubject = asyncHandler(async (req, res) => {
     yearId: parsedYearId
   });
 
-  return res.status(201).json(
+  return res.status(200).json(
     new ApiResponse(
-      201,
+      200,
       subject,
       `Subject created successfully`
     )
@@ -56,8 +56,8 @@ const getAllSubjects = asyncHandler(async (req,res)=>{
             attributes: ["id","name","description"]
         }
     })
-    return res.status(201).json(new ApiResponse(
-        201,
+    return res.status(200).json(new ApiResponse(
+        200,
         subjects,
         `Subjects retrived successfully...`
     ))
@@ -80,9 +80,9 @@ const getSubjectById = asyncHandler(async (req,res)=>{
         throw new ApiError(404,`Subject not found`)
     }
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         subject,
         `Subject retrived successfully....`
     ))
@@ -115,9 +115,9 @@ const updateSubject = asyncHandler(async (req,res)=>{
     }
     await subject.save();
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         subject,
         `Subject updated successfully`
     ))

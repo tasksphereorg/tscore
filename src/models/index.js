@@ -3,39 +3,33 @@ import Year from "./year.models.js";
 import Division from "./division.models.js";
 import Subject from "./subject.models.js";
 import DivisionSubject from "./divisionSubject.models.js";
+import Task from "./task.models.js";
 
+/* ================= YEAR RELATIONS ================= */
 
-// Association
-
-// ===== YEAR → DIVISION =====
-Year.hasMany(Division,{
+Year.hasMany(Division, {
   foreignKey: "yearId",
-  as: "division",
+  as: "divisions",
   onDelete: "CASCADE",
   onUpdate: "CASCADE"
 });
 
-Division.belongsTo(Year,{
+Division.belongsTo(Year, {
   foreignKey: "yearId",
   as: "year"
 });
 
-
-
-// ===== YEAR → SUBJECT =====
-Year.hasMany(Subject,{
+Year.hasMany(Subject, {
   foreignKey: "yearId",
-  as: "subject",
+  as: "subjects",
   onDelete: "CASCADE",
   onUpdate: "CASCADE"
-})
+});
 
-Subject.belongsTo(Year,{
+Subject.belongsTo(Year, {
   foreignKey: "yearId",
   as: "year"
-})
-
-
+});
 
 /* ================= DIVISION ↔ SUBJECT ================= */
 
@@ -53,12 +47,37 @@ Subject.belongsToMany(Division, {
   as: "divisions"
 });
 
+/* ================= TASK RELATIONS ================= */
 
+// Division → Task
+Division.hasMany(Task, {
+  foreignKey: "divisionId",
+  as: "tasks",
+  onDelete: "CASCADE"
+});
+
+Task.belongsTo(Division, {
+  foreignKey: "divisionId",
+  as: "division"
+});
+
+// Subject → Task
+Subject.hasMany(Task, {
+  foreignKey: "subjectId",
+  as: "tasks",
+  onDelete: "CASCADE"
+});
+
+Task.belongsTo(Subject, {
+  foreignKey: "subjectId",
+  as: "subject"
+});
 
 export {
   sequelize,
   Year,
   Division,
   Subject,
-  DivisionSubject
+  DivisionSubject,
+  Task
 };

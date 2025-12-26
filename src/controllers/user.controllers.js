@@ -70,8 +70,8 @@ try {
     };
   
     return res
-      .status(201)
-      .json(new ApiResponse(201, responseUser, `User registered successfully`));
+      .status(200)
+      .json(new ApiResponse(200, responseUser, `User registered successfully`));
 } catch (error) {
       console.log(`Error Occured while registering the User ${error}`);
       throw new ApiError(500,`Internal Server Error, error : ${error}`)
@@ -165,8 +165,8 @@ const userLogout = asyncHandler(async (req, res) => {
     sameSite: "strict"
   });
 
-  return res.status(201).json(
-    new ApiResponse(201, null, "User logged out successfully")
+  return res.status(200).json(
+    new ApiResponse(200, null, "User logged out successfully")
   );
 });
 

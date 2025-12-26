@@ -27,9 +27,9 @@ const allotSubjectToDivision = asyncHandler(async (req,res)=>{
 
     await division.addSubject(subject);
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         null,
         `Subject allotted to division successfully`
     ))
@@ -51,9 +51,9 @@ const getDivisionSubjects = asyncHandler(async (req,res)=>{
         throw new ApiError(404,`Division not found`)
     }
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         division,
         `Division with subjects fetched`
     ))

@@ -14,6 +14,8 @@ app.use(express.urlencoded({extended: true, limit : "16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+const baseUrl = "/api/v1"
+
 
 
 import healthcheckRouter from "./routes/healthcheck.routes.js"
@@ -22,13 +24,14 @@ import userRouter from "./routes/user.routes.js"
 import yearRouter from "./routes/year.routes.js"
 import divisionRouter from "./routes/division.routes.js"
 import subjectRouter from "./routes/subjects.routes.js"
+import taskRouter from "./routes/task.routes.js"
 
-
-app.use("/api/v1/healthcheck" , healthcheckRouter)
-app.use("/api/v1/user" , userRouter)
-app.use("/api/v1/year" , yearRouter)
-app.use("/api/v1/division",divisionRouter)
-app.use("/api/v1/subject",subjectRouter)
+app.use(`${baseUrl}/healthcheck` , healthcheckRouter)
+app.use(`${baseUrl}/user` , userRouter)
+app.use(`${baseUrl}/year` , yearRouter)
+app.use(`${baseUrl}/division`,divisionRouter)
+app.use(`${baseUrl}/subject"`,subjectRouter)
+app.use(`${baseUrl}/task`,taskRouter)
 
 
 app.use(errorHandler) 

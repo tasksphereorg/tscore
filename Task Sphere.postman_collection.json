@@ -1104,6 +1104,170 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Task APIs",
+			"item": [
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Subject the TA1\",\n    \"description\" : \"All the student are notify, You should have to submit the TA1\",\n    \"deadline\" : \"2025-12-31\",\n    \"subjectId\" : 2,\n    \"divisionId\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}task",
+							"host": [
+								"{{baseURL}}task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Subject the TA1\",\n    \"description\" : \"All the student are notify, You should have to submit the TA1\",\n    \"deadline\" : \"2025-12-31\",\n    \"subjectId\" : 2,\n    \"divisionId\" : 2\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}task/3",
+							"host": [
+								"{{baseURL}}task"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task By Subject or Division",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Subject the TA1\",\n    \"description\" : \"All the student are notify, You should have to submit the TA1\",\n    \"deadline\" : \"2025-12-31\",\n    \"subjectId\" : 2,\n    \"divisionId\" : 2\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}task?divisionId=2&subjectId=2",
+							"host": [
+								"{{baseURL}}task"
+							],
+							"query": [
+								{
+									"key": "divisionId",
+									"value": "2"
+								},
+								{
+									"key": "subjectId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"divisionId\" : 2\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}task/3",
+							"host": [
+								"{{baseURL}}task"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"divisionId\" : 2\n    \n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}task/1",
+							"host": [
+								"{{baseURL}}task"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzY2Nzc5NzA3LCJleHAiOjE3NjY3ODE1MDd9.H08B6wVl1-qb9odQOl1BIXqqZacYXGCFvpIZQGg0-Yk",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
 		}
 	],
 	"event": [
@@ -1137,6 +1301,13 @@
 					"console.log(\"Request: \" + pm.info.requestName + \" | Response Time: \" + pm.response.responseTime + \"ms\");"
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
 		}
 	]
 }
