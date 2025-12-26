@@ -22,9 +22,9 @@ const createYear = asyncHandler(async (req,res)=>{
     });
 
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         {
             id: year.id,
             name: year.name,
@@ -55,9 +55,9 @@ const getYearById = asyncHandler(async (req,res)=>{
         throw new ApiError(404,`Year not found`)
     }
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         year,
         `Year retrieved successfully`
     ))
@@ -86,9 +86,9 @@ const updateYear = asyncHandler(async (req,res)=>{
     }
     await year.save();
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         year,
         `Year updated successfully`
     ))

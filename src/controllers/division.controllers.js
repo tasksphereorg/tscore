@@ -31,9 +31,9 @@ const createDivision = asyncHandler(async (req, res)=>{
         yearId: parsedYearId
     })
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         division,
         `Division created Successfully.`
     ))
@@ -48,8 +48,8 @@ const getAllDivision = asyncHandler(async (req,res)=>{
             attributes: ["id", "name", "description"]
         }
     });
-    return res.status(201).json(new ApiResponse(
-        201,
+    return res.status(200).json(new ApiResponse(
+        200,
         divisions,
         `Divisions retrived successfully...`
     ))
@@ -71,9 +71,9 @@ const getDivisionById = asyncHandler(async (req,res)=>{
         throw new ApiError(404,`Division not found`)
     }
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         division,
         `Division retrived successfully`
     ))
@@ -100,9 +100,9 @@ const updateDivision = asyncHandler(async (req,res)=>{
     }
     await division.save();
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         division,
         `Division Updated successfully`
     ))
@@ -120,9 +120,9 @@ const deleteDivision = asyncHandler(async (req,res)=>{
     }
     await division.destroy();
     res
-    .status(201)
+    .status(200)
     .json(new ApiResponse(
-        201,
+        200,
         null,
         `Division deleted successfully`
     ))
