@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import User from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 import { generateAccessToken,generateRefreshToken } from "../utils/userhelper.js";
+import Student from "../models/student.models.js";
 
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -59,6 +60,10 @@ try {
       mobno,
       role: "STUDENT"
     });
+    const student = await Student.create({
+      userId: user.id,
+      onboarded: false
+    })
   
     const responseUser = {
       id: user.id,
@@ -89,6 +94,11 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({
     where: { email }
   });
+  const student = await Student.findOne({
+    where: {
+      userId: user.id
+    }
+  })
   if (!user) {
     throw new ApiError(401, "Invalid email or password");
   }
@@ -127,7 +137,8 @@ const loginUser = asyncHandler(async (req, res) => {
         200,
         {
           user: responseUser,
-          accessToken
+          accessToken,
+          onboarded: student?.onboarded || false
         },
         "User logged in successfully"
       )

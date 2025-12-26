@@ -4,6 +4,8 @@ import Division from "./division.models.js";
 import Subject from "./subject.models.js";
 import DivisionSubject from "./divisionSubject.models.js";
 import Task from "./task.models.js";
+import User from "./user.models.js";
+import Student from "./student.models.js";
 
 /* ================= YEAR RELATIONS ================= */
 
@@ -73,11 +75,57 @@ Task.belongsTo(Subject, {
   as: "subject"
 });
 
+/* ================= Student Relation ================= */
+
+// User → Student
+User.hasOne(Student, {
+  foreignKey: "userId",
+  as: "user",
+  onDelete: "CASCADE"
+})
+
+Student.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user"
+})
+
+
+// Year → Student
+Year.hasMany(Student, {
+  foreignKey: "yearId",
+  as: "students",
+  onDelete: "SET NULL",
+  onUpdate: "CASCADE"
+});
+
+Student.belongsTo(Year, {
+  foreignKey: "yearId",
+  as: "year",
+  onDelete: "SET NULL"
+});
+
+
+// Division → Student
+Division.hasMany(Student, {
+  foreignKey: "divisionId",
+  as: "students",
+  onDelete: "SET NULL",
+  onUpdate: "CASCADE"
+});
+
+Student.belongsTo(Division, {
+  foreignKey: "divisionId",
+  as: "division",
+  onDelete: "SET NULL"
+});
+
 export {
   sequelize,
   Year,
   Division,
   Subject,
   DivisionSubject,
-  Task
+  Task,
+  User,
+  Student
 };
