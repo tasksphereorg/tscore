@@ -145,6 +145,55 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
+
+
+const loginAdmin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new ApiError(400, "Email and password are required");
+  }
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    throw new ApiError(401, "Invalid email or password");
+  }
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    throw new ApiError(401, "Invalid email or password");
+  }
+  if (user.role !== "ADMIN") {
+    throw new ApiError(403, "Access denied");
+  }
+
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user.id);
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  const responseUser = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role
+  };
+
+  return res
+    .status(200)
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    })
+    .json(
+      new ApiResponse(
+        200,
+        { user: responseUser, accessToken },
+        "Admin logged in successfully"
+      )
+    );
+});
+
+
 const userProfile = asyncHandler(async (req, res) => {
   if (!req.user || !req.user.id) {
     throw new ApiError(401, "Unauthorized request");
@@ -187,6 +236,7 @@ const userLogout = asyncHandler(async (req, res) => {
 export { 
   registerUser, 
   loginUser,
+  loginAdmin,
   refreshAccessToken,
   userProfile,
   userLogout
