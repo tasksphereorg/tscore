@@ -8,6 +8,7 @@ import { json } from "sequelize";
 import User from "../models/user.models.js"
 import DivisionSubject from "../models/divisionSubject.models.js"
 import Subject from "../models/subject.models.js";
+import Task from "../models/task.models.js"
 
 const onboardStudent = asyncHandler(async (req,res)=>{
     const { yearId, divisionId } = req.body;
@@ -56,8 +57,6 @@ const studentDashboard = asyncHandler(async (req,res)=>{
     const student = await Student.findOne({
         where: { userId }
     });
-    console.log(`Studentobj : ${student.divisionId} - ${student.yearId}`);
-    
     if(!user || !student){
         throw new ApiError(404,`User or Student not found`)
     }
@@ -90,11 +89,39 @@ const studentDashboard = asyncHandler(async (req,res)=>{
     ))
 })
 
+const subjectTask = asyncHandler(async (req,res)=>{
+    const { subjectId } = req.query;
+    if (!subjectId || isNaN(subjectId)) {
+        throw new ApiError(400,`Invalid subject Id`)
+    }
+
+    const subject = await Subject.findByPk(subjectId, {
+        attributes: ["id","name"],
+        include: {
+            model: Task,
+            as: "tasks",
+            attributes: ["id","title","description","deadline","taskDoc"]
+        }
+    })
+    if (!subject) {
+        throw new ApiError(404,`Subject not found`)
+    }
+    res
+    .status(200)
+    .json(new ApiResponse(
+        200,
+        subject,
+        `Task retrived successfully`
+    ))
+
+})
+
 
 
 // 12
 
 export {
     onboardStudent,
-    studentDashboard
+    studentDashboard,
+    subjectTask
 }
