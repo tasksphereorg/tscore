@@ -112,6 +112,34 @@ const getAllTaskBySubjectDivision = asyncHandler(async (req,res)=>{
 })
 
 
+const getSubjectTask = asyncHandler(async (req,res)=>{
+    const { subjectId } = req.query;
+    if (!subjectId || isNaN(subjectId)) {
+        throw new ApiError(400,`Invalid subject Id`)
+    }
+
+    const subject = await Subject.findByPk(subjectId, {
+        attributes: ["id","name"],
+        include: {
+            model: Task,
+            as: "tasks",
+            attributes: ["id","title","description","deadline","taskDoc"]
+        },
+        order: [[{ model: Task, as: "tasks" }, "createdAt", "DESC"]]
+    })
+    if (!subject) {
+        throw new ApiError(404,`Subject not found`)
+    }
+    res
+    .status(200)
+    .json(new ApiResponse(
+        200,
+        subject,
+        `Task retrived successfully`
+    ))
+
+})
+
 const updateTask = asyncHandler(async (req,res)=>{
     const { id } = req.params;
     const { title, description, deadline,taskDoc,subjectId,divisionId } = req.body;
@@ -190,6 +218,7 @@ export {
     createTask,
     getTaskById,
     getAllTaskBySubjectDivision,
+    getSubjectTask,
     updateTask,
     deleteTask
 }
