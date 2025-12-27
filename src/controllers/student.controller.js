@@ -6,7 +6,8 @@ import Year from "../models/year.models.js"
 import Division from "../models/division.models.js"
 import { json } from "sequelize";
 import User from "../models/user.models.js"
-
+import DivisionSubject from "../models/divisionSubject.models.js"
+import Subject from "../models/subject.models.js";
 
 const onboardStudent = asyncHandler(async (req,res)=>{
     const { yearId, divisionId } = req.body;
@@ -50,18 +51,48 @@ const onboardStudent = asyncHandler(async (req,res)=>{
 
 
 const studentDashboard = asyncHandler(async (req,res)=>{
-    const userId = req.user.id
+    const userId = req.user.id;
+    const user = await User.findByPk(userId);
+    const student = await Student.findOne({
+        where: { userId }
+    });
+    console.log(`Studentobj : ${student.divisionId} - ${student.yearId}`);
     
-    const user = await User.findByPk(userId)
+    if(!user || !student){
+        throw new ApiError(404,`User or Student not found`)
+    }
+    const division = await Division.findByPk(student.divisionId,{
+        attributes: ["id","name"],
+        include: {
+            model: Subject,
+            as: "subjects",
+            attributes: ["id","name","description"],
+            through: { attributes: [] }
+        }
+    })
+    if (!division) {
+        throw new ApiError(404,`Division not found`)
+    }
 
     res
     .status(200)
     .json(new ApiResponse(
         200,
-        user,
-        `Welcome ${user.name} on Dashboard`
+        {
+            student: {
+                id: student.id,
+                yearId: student.yearId,
+                divisionId: student.divisionId
+            },
+            subjects: division.subjects || null
+        },
+        `Student dashboard data fetched successfully`
     ))
 })
+
+
+
+// 12
 
 export {
     onboardStudent,
