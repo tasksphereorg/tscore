@@ -101,7 +101,8 @@ const subjectTask = asyncHandler(async (req,res)=>{
             model: Task,
             as: "tasks",
             attributes: ["id","title","description","deadline","taskDoc"]
-        }
+        },
+        order: [[{ model: Task, as: "tasks" }, "createdAt", "DESC"]]
     })
     if (!subject) {
         throw new ApiError(404,`Subject not found`)
@@ -116,9 +117,6 @@ const subjectTask = asyncHandler(async (req,res)=>{
 
 })
 
-
-
-// 12
 
 export {
     onboardStudent,
